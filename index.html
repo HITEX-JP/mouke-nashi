@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MouKeなし - 脱毛メニュー</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;700&family=Great+Vibes&family=Pacifico&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Zen Maru Gothic', 'Hiragino Kaku Gothic ProN', sans-serif;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 50%, #fff0f5 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        /* キラキラエフェクト */
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .sparkle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #fff 0%, #ffc0cb 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 2s infinite;
+            z-index: 1;
+        }
+        
+        /* フェードインアニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+        
+        .logo {
+            font-size: 4.5em;
+            font-weight: 700;
+            color: #d4739b;
+            margin-bottom: 10px;
+            letter-spacing: 12px;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            font-family: 'Great Vibes', cursive;
+            text-shadow: 3px 3px 6px rgba(212, 115, 155, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            color: #c97a96;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+        
+        .tagline {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: #999;
+            letter-spacing: 1px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        
+        .menu-section {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.15);
+            border: 2px solid #ffe8f0;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .menu-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 182, 193, 0.25);
+        }
+        
+        .menu-section:nth-child(2) { animation-delay: 0.1s; }
+        .menu-section:nth-child(3) { animation-delay: 0.2s; }
+        .menu-section:nth-child(4) { animation-delay: 0.3s; }
+        .menu-section:nth-child(5) { animation-delay: 0.4s; }
+        .menu-section:nth-child(6) { animation-delay: 0.5s; }
+        .menu-section:nth-child(7) { animation-delay: 0.6s; }
+        .menu-section:nth-child(8) { animation-delay: 0.7s; }
+        
+        .section-title {
+            font-size: 1.4em;
+            color: #d4739b;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ffd6e8;
+            text-align: center;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '✨';
+            position: absolute;
+            right: 10px;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff9fc 0%, #fff5f8 100%);
+            border-radius: 12px;
+            border: 1px solid #ffe8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 5px 20px rgba(212, 115, 155, 0.2);
+            background: linear-gradient(135deg, #fff0f8 0%, #ffe8f5 100%);
+            border-color: #d4739b;
+        }
+        
+        .menu-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .menu-name {
+            font-size: 1.15em;
+            color: #555;
+            flex: 1;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+        
+        .menu-item:hover .menu-name {
+            color: #d4739b;
+        }
+        
+        .menu-category {
+            font-size: 0.95em;
+            color: #c97a96;
+            margin-left: 10px;
+            font-weight: 500;
+        }
+        
+        .menu-price {
+            font-size: 1.9em;
+            font-weight: 700;
+            color: #d4739b;
+            margin-left: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-item:hover .menu-price {
+            transform: scale(1.1);
+        }
+        
+        .price-unit {
+            font-size: 0.6em;
+            font-weight: 400;
+            color: #bbb;
+        }
+        
+        .concept-section {
+            background: linear-gradient(135deg, #d4739b 0%, #e89bb9 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(212, 115, 155, 0.3);
+            color: white;
+            text-align: center;
+            opacity: 0;
+            animation: scaleIn 0.8s ease-out 0.2s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .concept-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+        
+        .concept-title {
+            font-size: 1.6em;
+            font-weight: 500;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .concept-text {
+            font-size: 1.05em;
+            line-height: 2;
+            letter-spacing: 1px;
+            font-weight: 400;
+            position: relative;
+        }
+        
+        .note-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.15);
+            border: 2px solid #ffe8f0;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .note-title {
+            font-size: 1.3em;
+            color: #d4739b;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .note-text {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.9;
+            text-align: center;
+        }
+        
+        .feature-box {
+            background: linear-gradient(135deg, #fff9fc 0%, #fff0f5 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 2px solid #ffd6e8;
+            text-align: center;
+        }
+        
+        .feature {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4739b 0%, #e89bb9 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            margin: 5px;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(212, 115, 155, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out backwards;
+        }
+        
+        .feature:nth-child(1) { animation-delay: 0.2s; }
+        .feature:nth-child(2) { animation-delay: 0.4s; }
+        .feature:nth-child(3) { animation-delay: 0.6s; }
+        .feature:nth-child(4) { animation-delay: 0.8s; }
+        
+        .feature:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 5px 20px rgba(212, 115, 155, 0.4);
+        }
+        
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.15);
+            border: 2px solid #ffe8f0;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff9fc 0%, #fff5f8 100%);
+            border-radius: 10px;
+            border-left: 4px solid #d4739b;
+            transition: all 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 3px 15px rgba(212, 115, 155, 0.2);
+        }
+        
+        .info-label {
+            font-size: 0.9em;
+            color: #c97a96;
+            font-weight: 500;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .info-content {
+            font-size: 1.1em;
+            color: #555;
+            font-weight: 400;
+        }
+        
+        .attention-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff5cc 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #ffe4a0;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .attention-box:hover {
+            box-shadow: 0 5px 20px rgba(255, 200, 100, 0.3);
+            transform: scale(1.02);
+        }
+        
+        .attention-title {
+            font-size: 1.1em;
+            color: #d4a03b;
+            font-weight: 500;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .attention-text {
+            font-size: 0.95em;
+            color: #666;
+            line-height: 1.8;
+            text-align: center;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff9fc 0%, #fff5f8 100%);
+            border-radius: 10px;
+            border-left: 4px solid #d4739b;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: slideInLeft 0.5s ease-out forwards;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:nth-child(1) { animation-delay: 0.1s; }
+        .flow-step:nth-child(2) { animation-delay: 0.2s; }
+        .flow-step:nth-child(3) { animation-delay: 0.3s; }
+        .flow-step:nth-child(4) { animation-delay: 0.4s; }
+        .flow-step:nth-child(5) { animation-delay: 0.5s; }
+        .flow-step:nth-child(6) { animation-delay: 0.6s; }
+        
+        .flow-step:hover {
+            transform: translateX(15px);
+            box-shadow: 0 5px 20px rgba(212, 115, 155, 0.2);
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #d4739b 0%, #e89bb9 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .flow-step:hover .step-number {
+            transform: rotate(360deg) scale(1.1);
+        }
+        
+        .wax-highlight {
+            background: linear-gradient(135deg, #fff9fc 0%, #ffecf5 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ffd6e8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wax-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        .trainer-badge {
+            text-align: center;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #d4739b;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .trainer-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(212, 115, 155, 0.3);
+        }
+        
+        img {
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+        
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 115, 155, 0.3);
+        }
+        
+        @media (max-width: 600px) {
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .menu-price {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
+            .menu-section, .concept-section, .note-section, .info-section {
+                padding: 25px;
+            }
+            
+            .logo {
+                font-size: 2.2em;
+            }
+            
+            .concept-text {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">Mou<span style="color: #333;">Ke</span>なし</h1>
+            <p class="subtitle">毛も儲けも、なくていい。</p>
+        </header>
+        
+        <div class="concept-section">
+            <h2 class="concept-title">信頼と寄り添いの脱毛を</h2>
+            <p class="concept-text">
+                当サロンでは、毛周期に合わせてしっかりと脱毛を行います。<br>
+                「最短〇回で脱毛完了」「毛周期に関係なく脱毛できます」<br>
+                「白髪に効果あり」「日焼けしていても大丈夫」<br>
+                そういった間違ったことは一切言いません。<br><br>
+                お客様一人一人に信頼をしていただくために、<br>
+                寄り添った脱毛を提案していきます。
+            </p>
+        </div>
+        
+        <div class="menu-section">
+            <h2 class="section-title">全身脱毛メニュー（VIOなし）</h2>
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <img src="ipl-machine.jpg" alt="オリジナルIPL光脱毛機" style="max-width: 100%; height: auto; max-height: 400px; border-radius: 15px; box-shadow: 0 5px 20px rgba(212, 115, 155, 0.2);">
+                <p style="margin-top: 10px; color: #999; font-size: 0.9em;">弊社開発のオリジナルIPL光脱毛機</p>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    全身脱毛<span class="menu-category">（メンズ）</span>
+                </div>
+                <div class="menu-price">
+                    ¥6,600<span class="price-unit">/回</span>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    全身脱毛<span class="menu-category">（レディース）</span>
+                </div>
+                <div class="menu-price">
+                    ¥5,500<span class="price-unit">/回</span>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    全身脱毛<span class="menu-category">（キッズ）</span><span style="font-size: 0.85em; color: #999; margin-left: 8px;">※小学生まで</span>
+                </div>
+                <div class="menu-price">
+                    ¥4,400<span class="price-unit">/回</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <h2 class="section-title">全身脱毛メニュー（VIOあり）</h2>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    全身脱毛<span class="menu-category">（メンズ）</span>
+                </div>
+                <div class="menu-price">
+                    ¥9,900<span class="price-unit">/回</span>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    全身脱毛<span class="menu-category">（レディース）</span>
+                </div>
+                <div class="menu-price">
+                    ¥7,700<span class="price-unit">/回</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="note-section">
+            <div class="note-title">当サロンの特徴</div>
+            <div class="feature-box">
+                <span class="feature">完全都度払い制</span>
+                <span class="feature">オリジナルIPL光脱毛機</span>
+                <span class="feature">最安価格</span>
+                <span class="feature">効果絶大</span>
+            </div>
+            <p class="note-text" style="margin-top: 20px;">
+                面倒な回数券やコース契約は一切ありません<br>
+                通いたい時に、必要な回数だけお支払いいただけます
+            </p>
+            <p class="note-text" style="margin-top: 15px; font-weight: 500; color: #d4739b;">
+                当サロンでは弊社開発のオリジナル脱毛機を採用しているため<br>
+                お客様への低価格を実現しております
+            </p>
+            
+            <div class="attention-box">
+                <div class="attention-title">注意事項</div>
+                <p class="attention-text">
+                    <strong style="color: #d4739b;">【IPL光脱毛をされるお客様】</strong><br>
+                    全身のみの対応となっておりますので、各部位限定は行っておりません。<br>
+                    部位のみでも全身の料金となりますのでご注意ください。<br>
+                    剃毛処理は当店では行っておりませんので、ご自身での処理をお願いしております。
+                </p>
+            </div>
+        </div>
+        
+        <div class="menu-section" style="border: 3px solid #d4739b;">
+            <h2 class="section-title" style="color: #d4739b;">WAX脱毛メニュー</h2>
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <img src="wax-facial.jpg" alt="匠道WAX施術" style="max-width: 100%; height: auto; max-height: 400px; border-radius: 15px; box-shadow: 0 5px 20px rgba(212, 115, 155, 0.2);">
+                <p style="margin-top: 10px; color: #999; font-size: 0.9em;">フェイシャルWAX施術イメージ</p>
+            </div>
+            
+            <div class="wax-highlight">
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <div style="font-size: 1.3em; font-weight: 500; color: #d4739b; margin-bottom: 8px;">匠道®WAX 使用</div>
+                    <div style="font-size: 1em; color: #666; line-height: 1.8;">
+                        日本生まれの「眠れるほどに心地いいワックス脱毛」<br>
+                        <span style="color: #d4739b; font-weight: 500;">痛みを最小限に抑えた</span>独自の技術とプレケア・アフターケアで<br>
+                        お肌への負担を軽減しながら、しっかり脱毛します
+                    </div>
+                </div>
+                <div class="trainer-badge">
+                    <span style="font-size: 1.1em; font-weight: 500; color: #d4739b;">🏅 匠道®トレーナー在籍 🏅</span>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    フェイシャル<span class="menu-category">（男女共通）</span>
+                </div>
+                <div class="menu-price">
+                    ¥5,500<span class="price-unit">/回</span>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    うなじ<span class="menu-category">（男女共通）</span>
+                </div>
+                <div class="menu-price">
+                    ¥3,300<span class="price-unit">/回</span>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    背中（上部）<span class="menu-category">（男女共通）</span>
+                </div>
+                <div class="menu-price">
+                    ¥3,300<span class="price-unit">/回</span>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-name">
+                    背中（下部）<span class="menu-category">（男女共通）</span>
+                </div>
+                <div class="menu-price">
+                    ¥3,300<span class="price-unit">/回</span>
+                </div>
+            </div>
+            
+            <div class="attention-box" style="margin-top: 25px;">
+                <div class="attention-title">⚠️ WAX脱毛をされるお客様へ</div>
+                <p class="attention-text">
+                    <strong style="color: #d4739b;">施術前の剃毛処理は絶対に行わないでください</strong><br>
+                    WAX脱毛は毛を掴んで抜く施術のため、<br>
+                    剃毛処理などで毛がない状態ですとWAXでは脱毛できません。<br>
+                    施術当日は毛を残した状態でお越しください。
+                </p>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="info-item">
+                <div class="info-label">住所</div>
+                <div class="info-content">静岡県袋井市西田64－6</div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-label">お問い合わせ</div>
+                <div class="info-content">090-4087-7731</div>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <h2 class="section-title">IPL光脱毛 施術の流れ</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div style="font-size: 1.1em; color: #555;">カウンセリング</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div style="font-size: 1.1em; color: #555;">パッチテスト</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div style="font-size: 1.1em; color: #555;">ジェル塗布</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div style="font-size: 1.1em; color: #555;">脱毛処理</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div style="font-size: 1.1em; color: #555;">ジェルのふき取り</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <div style="font-size: 1.1em; color: #555; font-weight: 500;">完了</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="menu-section" style="border: 3px solid #d4739b;">
+            <h2 class="section-title" style="color: #d4739b;">WAX脱毛 施術の流れ</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div style="font-size: 1.1em; color: #555;">カウンセリング</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div style="font-size: 1.1em; color: #555;">パッチテスト</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div style="font-size: 1.1em; color: #555;">プレケア</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div style="font-size: 1.1em; color: #555;">施術</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div style="font-size: 1.1em; color: #555;">アフターケア</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <div style="font-size: 1.1em; color: #555; font-weight: 500;">アフターカウンセリング</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // キラキラエフェクトを生成
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+        
+        // 定期的にキラキラを生成
+        setInterval(createSparkle, 500);
+        
+        // スクロールアニメーション
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // 全てのセクションを監視
+        document.querySelectorAll('.menu-section, .note-section, .info-section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // メニューアイテムにクリック時の効果
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
